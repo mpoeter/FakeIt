@@ -83,12 +83,12 @@ namespace fakeit {
         static const bool value = true;
     };
 
-    template<typename R, typename... arglist>
+    template<typename C, typename R, typename... arglist>
     struct VTableMethodType {
 #if defined (__GNUG__)
-        typedef R(*type)(void *, arglist...);
+        using type = R(C::*)(void *, arglist...);
 #elif defined (_MSC_VER)
-        typedef R(__thiscall *type)(void *, arglist...);
+        using type = R(__thiscall C::*)(void *, arglist...);
 #endif
     };
 }

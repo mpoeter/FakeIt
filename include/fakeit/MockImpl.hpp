@@ -186,7 +186,7 @@ namespace fakeit {
                 C * instance = &(MethodMockingContextBase<R, arglist...>::_mock.get());
                 return [=](arglist&... args) -> R {
                     auto m = union_cast<typename VTableMethodType<R,arglist...>::type>(mPtr);
-                    return m(instance, args...);
+                    return (instance->*m)(args...);
                 };
             }
 
@@ -206,7 +206,7 @@ namespace fakeit {
                 C * instance = &(MethodMockingContextBase<R, arglist...>::_mock.get());
                 return [=](arglist&... args) -> R {
                     auto m = union_cast<typename VTableMethodType<R,arglist...>::type>(mPtr);
-                    return m(instance, std::forward<arglist>(args)...);
+                    return (instance->*m)(std::forward<arglist>(args)...);
                 };
             }
         };
